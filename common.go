@@ -34,6 +34,7 @@ func makeConfig(user string, password string, privateKey string) (config *ssh.Cl
 	}
 	config = &ssh.ClientConfig{
 		User: user,
+        HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 		Auth: []ssh.AuthMethod{
 			ssh.Password(password),
 		},
@@ -46,6 +47,7 @@ func makeConfig(user string, password string, privateKey string) (config *ssh.Cl
 		clientkey := ssh.PublicKeys(signer)
 		config = &ssh.ClientConfig{
 			User: user,
+            HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 			Auth: []ssh.AuthMethod{
 				clientkey,
 			},

@@ -139,12 +139,9 @@ func CopyIOAndUpdateSessionDeadline(dst io.Writer, src io.Reader, session *SshSe
 	return written, err
 }
 
-func NewSSHClient(config *SSHClientConfig) (client *SSHClient, err error) {
+func NewSSHClient(config *SSHClientConfig) (client *SSHClient) {
 	sshClientsMutex.RLock()
 	client = sshClients[config.Host]
-	if client != nil {
-		return nil, errors.New("NewSSHClient error: config.Host is blank")
-	}
 	sshClientsMutex.RUnlock()
 	client = new(SSHClient)
 	client.Host = config.Host
@@ -155,7 +152,7 @@ func NewSSHClient(config *SSHClientConfig) (client *SSHClient, err error) {
 	sshClientsMutex.Lock()
 	sshClients[config.Host] = client
 	sshClientsMutex.Unlock()
-	return client, nil
+	return client
 }
 
 func getClient(hostname string) (client *SSHClient, err error) {

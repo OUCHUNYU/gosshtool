@@ -137,7 +137,7 @@ func (c *SSHClient) Cmd(cmd string, sn *SshSession, deadline *time.Time, idleTim
 	if c.isConnected == false {
 		_, err = c.Connect()
 		if err != nil {
-			return
+			return "", "", nil, err
 		}
 	}
 	if sn == nil {
@@ -147,7 +147,7 @@ func (c *SSHClient) Cmd(cmd string, sn *SshSession, deadline *time.Time, idleTim
 		currentSession.SetDeadline(deadline)
 	}
 	if err != nil {
-		return
+		return "", "", nil, err
 	}
 	var stdoutBuf bytes.Buffer
 	var stderrBuf bytes.Buffer

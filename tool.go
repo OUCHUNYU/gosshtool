@@ -142,9 +142,6 @@ func CopyIOAndUpdateSessionDeadline(dst io.Writer, src io.Reader, session *SshSe
 func NewSSHClient(config *SSHClientConfig) (client *SSHClient) {
 	sshClientsMutex.RLock()
 	client = sshClients[config.Host]
-	if client != nil {
-		return
-	}
 	sshClientsMutex.RUnlock()
 	client = new(SSHClient)
 	client.Host = config.Host
